@@ -18,6 +18,19 @@ def include_dependencies
   puts
 end
 
+def cpp_linkage_guard
+  putd "#ifdef __cplusplus"
+  putd "extern \"C++\" {"
+  putd "#endif"
+
+  yield
+
+  putd "#ifdef __cplusplus"
+  putd "}"
+  putd "#endif"
+end
+
+
 def output_constants
   putd "#define FFF_MAX_ARGS (#{$MAX_ARGS}u)"
   putd "#ifndef FFF_ARG_HISTORY_LEN"
@@ -666,11 +679,13 @@ end
 
 def output_c_and_cpp(has_calling_conventions)
   include_guard {
-    include_dependencies
-    output_constants
-    output_internal_helper_macros
-    yield
-    output_macro_counting_shortcuts(has_calling_conventions)
+    cpp_linkage_guard {
+      include_dependencies
+      output_constants
+      output_internal_helper_macros
+      yield
+      output_macro_counting_shortcuts(has_calling_conventions)
+    }
   }
 end
 
