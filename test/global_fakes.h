@@ -2,6 +2,9 @@
 #define GLOBAL_FAKES_H_
 
 #include "../fff.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "string.h"
 
 
@@ -46,4 +49,7 @@ DECLARE_FAKE_VALUE_FUNC(int, strlcpy3, char* const, const char* const, const siz
 DECLARE_FAKE_VALUE_FUNC(int, __cdecl, strlcpy3, char* const, const char* const, const size_t);
 #endif
 #endif /* __cplusplus */
+#ifdef __cplusplus
+}
+#endif
 #endif /* GLOBAL_FAKES_H_ */
